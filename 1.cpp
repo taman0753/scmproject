@@ -209,3 +209,36 @@ void getText(int x, int y, char* s,char str[],COLORS c = BLUE)
 }
 
 //makes the plus sign
+void plus(char* s)
+{
+	window(8,19,32,21);
+	textbackground(RED);
+	clrscr();
+	window(17,17,23,23);
+	textbackground(RED);
+	clrscr();
+	window(14,20,24,20);
+	textcolor(WHITE);
+	setText(14,20,s,RED,18);
+}
+
+void clear()
+{
+	window(5,5,75,15);
+	textcolor(WHITE);
+	textbackground(BLUE);
+	clrscr();
+	box(5,5,75,15);
+}
+
+void console(char* s)
+{
+	window(40,18,75,22);
+	textcolor(WHITE);
+	textbackground(BLACK);
+	clrscr();
+	box(40,18,75,22);
+	window(45,20,75,20);
+	gotoxy(45,20);
+	puts(s);
+}
