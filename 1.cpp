@@ -861,4 +861,37 @@ void Report()
 							{
 								console("Enter dates correctly");
 								goto line2;
-							}
+
+							
+						}
+
+						init();
+							view_date(sdate,smonth,syear,edate,emonth,eyear);
+						}
+						else if(ch2==2)
+						{
+							view_month(3);
+						}
+						else if(ch2==3)
+						{
+							view_month(6);
+						}
+						flag=0;
+						break;
+					case 4: ch=27;
+				 }
+		}
+	} while(ch!=27);
+}
+
+void report:: displayData()
+{
+	init();
+	window(6,6,26,6);
+	cout<<"Admission num-> "<<admNo;
+	window(6,7,26,7);
+	gotoxy(6,7);
+	cout<<date<<"-"<<month<<"-"<<year<<"\t";
+	setText(6,8,res,WHITE);
+	getch();
+}
