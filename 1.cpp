@@ -596,3 +596,53 @@ void MedicalCheckup()
 				{
 					cr=0;
 					tY-=3;
+					}
+				else
+				{
+					cr++;
+					tY++;
+				}
+				cursor(tX,tY,option[cr]);
+				break;
+			case 72:setText(tX,tY,option[cr]);  //up key
+				if(cr==0)
+				{
+					cr=3;
+					tY+=3;
+				}
+				else
+				{
+					cr--;
+					tY--;
+				}
+				cursor(tX,tY,option[cr]);
+				break;
+			case 13:switch(cr+1)
+				{
+					case 1: init();
+						MC_addRecord();
+						flag=0;
+						break;
+					case 2: init();
+						setText(5,5,"Enter Admno. to search -> ",WHITE);
+						admn = getNum(5,6,"",WHITE);
+						MC_searchRecord(admn);
+						flag=0;
+						break;
+					case 3: init();
+						MC_viewAll();
+						flag=0;
+						break;
+					case 4: ch=27;
+				 }
+		}
+	} while(ch!=27);
+}
+
+
+void checkUp:: displayData()
+{
+	int tX=6, tY=6;
+	//displaying the medical report
+	char list[7][50] = {"4.Sight:","5.Ears:","6.Teeth:","7.Throat:","8.Tonsils:","9.Nails:","10.Hygiene:"};
+	char *str;
