@@ -546,3 +546,53 @@ void SD_modifyRecord()
 			break;
 		if(s.getAdmno()==admn)
 		{
+		clear();
+			s.inputData();
+			f2.write((char*)&s,sizeof(s));
+		}
+		else
+		{
+			f2.write((char*)&s,sizeof(s));
+		}
+	}
+	f1.close();
+	f2.close();
+	remove("student.dat");
+	rename("temp.dat","student.dat");
+	console("Updated");
+	getch();
+}
+
+////////////////////////////////////////////////////
+///////////MEDICAL CHECKUP//////////////////////////
+////////////////////////////////////////////////////
+
+void MedicalCheckup()
+{
+	int cr,tX,tY,flag=0;
+	long admn;
+	char ch,option[4][50] = {"Add new Record","Search Record","View All Records","Go Back"};
+	do
+	{
+		if(flag==0)
+		{
+			init();
+			console("");
+			cr=0;
+			tX=6;
+			tY=7;
+			plus("MEDICAL CHECKUP");
+			clear();
+			for(int i=0;i<4;i++)
+				setText(tX,tY+i,option[cr+i]);
+			cursor(tX,tY,option[cr]);
+			flag=1;
+		}
+		ch=getch();
+		switch(ch)
+		{
+			case 80:setText(tX,tY,option[cr]); //down key
+				if(cr==3)
+				{
+					cr=0;
+					tY-=3;
