@@ -497,4 +497,52 @@ void SD_deleteRecord()
 		console("NotFound!");
 	getch();
 } 
+ //search a student by admn
+void SD_searchRecord()
+{
+	clear();
+	fstream f;
+	int admn;
+	f.open("student.dat",ios::in|ios::binary);
+	if(!f)
+	{
+		console("ERROR");
+		getch();
+		return;
+	}
+	admn = getNum(8,8,"Admno -> ");
+	while(!f.eof())
+	{
+		f.read((char*)&s, sizeof(s));
+		if(f.eof()) break;
+		if(s.getAdmno() == admn)
+		{
+			s.displayData();
+			getch();
+		}
+	}
+	f.close();
+}
 
+//modifying existing normal student data
+void SD_modifyRecord()
+{
+	clear();
+	fstream f1,f2;
+	int admn;
+	f1.open("student.dat",ios::in|ios::binary);
+	f2.open("temp.dat",ios::out|ios::binary);
+	if(!f1)
+	{
+		console("ERROR");
+		getch();
+		return;
+	}
+	admn=getNum(8,8,"Admno-> ");
+	while(!f1.eof())
+	{
+		f1.read((char*)&s,sizeof(s));
+		if(f1.eof())
+			break;
+		if(s.getAdmno()==admn)
+		{
