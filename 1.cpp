@@ -933,3 +933,67 @@ void R_addRecord() //disp mech
 	}
 		f1.close();
 }
+
+void R_searchRecord(long admn) //disp mech
+{
+	fstream f1;
+	int f=0;//flag
+	f1.open("report.dat",ios::in|ios::binary);
+	if(!f1)
+	{
+		cout<<"ERROR";
+		getch();
+		return;
+	}
+	while(!f1.eof())
+	{
+		f1.read((char*)&rep,sizeof(rep));
+		if(f1.eof())
+			break;
+		if(rep.getAdmno()==admn)
+		{
+			rep.displayData();
+			++f;
+		}
+	}
+	f1.close();
+       if(f==0)
+		cout<<"No record for this student is stored";
+}
+
+void view_date(int sdate, int smonth, int syear,int edate, int emonth, int eyear) //sdate,smonth,syear -> starting date
+//view reports on the basis of date
+{							       //edate,emonth,eyear -> end date
+	init();
+	fstream f1;
+	int d,m,y,f=0;//f is flag
+	f1.open("report.dat",ios::in|ios::binary);
+	if(!f1)
+	{
+		console("ERROR");
+		getch();
+		return;
+	}
+	while(!f1.eof())
+	{
+		f1.read((char*)&rep,sizeof(rep));
+		rep.getDate(d,m,y);// d,m,y are date month and year stored in the record
+		if(f1.eof())
+			break;
+		if(y<syear || y>eyear)
+			continue;
+		else if((y==syear&&m<smonth) || (y==eyear&&m>emonth))
+			continue;
+		else if((y==syear&&m==smonth&&d<sdate) || (y==eyear&&m==emonth&&d>edate))
+			continue;
+		else
+		{
+			rep.displayData();
+			getch();
+			f++;
+		}
+	}
+	f1.close();
+	if(f==0)
+		cout<<"No record stored for given dates";
+}
