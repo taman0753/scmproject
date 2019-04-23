@@ -744,3 +744,26 @@ void MC_searchRecord(long admn)
 	f1.close();
 	f2.close();
 }
+void MC_viewAll()
+{
+	fstream f1;
+	f1.open("checkup.dat",ios::in|ios::binary);
+	if(!f1)
+	{
+		console("ERROR");
+		getch();
+		return;
+	}
+	while(!f1.eof())
+	{
+		f1.read((char*)&c,sizeof(c));
+		if(f1.eof())
+			break;
+		c.displayData();
+		getch();
+		init();
+	}
+	f1.close();
+
+}
+}
