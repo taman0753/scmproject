@@ -895,3 +895,41 @@ void report:: displayData()
 	setText(6,8,res,WHITE);
 	getch();
 }
+
+void report:: inputData()
+{
+	init();
+	admNo = getNum(6,6,"Enter admission num-> ",WHITE);
+	setText(6,7,"Remarks/Reason (under 40 characters) -> ",WHITE);
+	getText(6,8,"",res,WHITE);
+	curDate(date,month,year);
+}
+
+void curDate(int &date, int&month, int&year)
+{
+	time_t t=time(0); // time right now
+	struct tm *now=localtime(&t);
+	year=(now->tm_year+1900);
+	month=(now->tm_mon+1);
+	date=(now->tm_mday);
+}
+
+void R_addRecord() //disp mech
+{
+	fstream f1;
+	char ch;
+	f1.open("report.dat",ios::app|ios::binary);
+	while(1)
+	{
+		rep.inputData();
+		f1.write((char*)&rep,sizeof(rep));
+		init();
+		setText(5,5,"Press N to stop entering data and ",WHITE);
+		setText(5,6,"any other key to continue entering data",WHITE);
+		window(5,7,10,7);
+		cin>>ch;
+		if(ch=='n'|| ch=='N')
+			break;
+	}
+		f1.close();
+}
