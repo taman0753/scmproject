@@ -766,4 +766,99 @@ void MC_viewAll()
 	f1.close();
 
 }
-}
+
+void Report()
+{
+	int cr,tX,tY,flag=0;
+	int choice,ch2,smonth,sdate,syear,emonth,edate,eyear;
+	long admn;
+	char ch,option[4][50] = {"Add New Visitor Entry","Get Visit Record","Get visitor reports","Go Back"};
+	do
+	{
+		if(flag==0)
+		{
+			init();
+			console("");
+			cr=0;
+			tX=6;
+			tY=7;
+			plus("VISITOR ENTRY");
+			clear();
+			for(int i=0;i<4;i++)
+				setText(tX,tY+i,option[cr+i]);
+			cursor(tX,tY,option[cr]);
+			flag=1;
+		}
+		ch=getch();
+		switch(ch)
+		{
+			case 80:setText(tX,tY,option[cr]); //down key
+				if(cr==3)
+				{
+					cr=0;
+					tY-=3;
+				}
+				else
+				{
+					cr++;
+					tY++;
+				}
+				cursor(tX,tY,option[cr]);
+				break;
+			case 72:setText(tX,tY,option[cr]);  //up key
+				if(cr==0)
+				{
+					cr=3;
+					tY+=3;
+				}
+				else
+				{
+					cr--;
+					tY--;
+				}
+				cursor(tX,tY,option[cr]);
+				break;
+			case 13:switch(cr+1)
+				{
+					case 1: init();
+						R_addRecord();
+						flag=0;
+						break;
+					case 2: init();
+						setText(5,5,"Enter Admno. to search -> ",WHITE);
+						admn = getNum(5,6,"",WHITE);
+						R_searchRecord(admn);
+						flag=0;
+						break;
+					case 3: init();
+						int tX=5,tY=5;
+						setText(tX,tY++,"Press 1 to get reports between two dates",WHITE);
+						setText(tX,tY++,"Press 2 get reports for past 3 months",WHITE);
+						setText(tX,tY++,"Press 3 to get repots for past 6 months",WHITE);
+						window(tX,tY,tX+20,tY);
+						gotoxy(tX,tY);
+						cin>>ch2;
+						if(ch2==1)
+						{
+							tX=5;
+							tY=5;
+							line2:
+							console("");
+							init();
+							setText(tX,tY++,"Enter date from when reports are required -> ",WHITE);
+							sdate = getNum(tX,tY++,"",WHITE);
+							setText(tX,tY++,"Enter month from when reports are required -> ",WHITE);
+							smonth = getNum(tX,tY++,"",WHITE);
+							setText(tX,tY++,"Enter year from when reports are required -> ",WHITE);
+							syear = getNum(tX,tY++,"",WHITE);
+							setText(tX,tY++,"Enter date till when reports are required -> ",WHITE);
+							edate = getNum(tX,tY++,"",WHITE);
+							setText(tX,tY++,"Enter month till when reports are required -> ",WHITE);
+							emonth = getNum(tX,tY++,"",WHITE);
+							setText(tX,tY++,"Enter year till when reports are required -> ",WHITE);
+							eyear = getNum(tX,tY++,"",WHITE);
+							if(sdate>31 || smonth>12 || edate>31 || emonth>12 || sdate<1 || smonth<1 || edate<1 || emonth<1)
+							{
+								console("Enter dates correctly");
+								goto line2;
+							}
